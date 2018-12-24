@@ -23,7 +23,18 @@ def task():
 
 @api.route('/task/test1')
 def task():
-    """无参数定时任务"""
+    """
+    定时任务 返回数据
+     - 通过get方法能获取celery异步执行结果
+     - get 方法默认是阻塞的行为， 会等到有了执行结果子后才返回
+     - get 方法也接受参数timeout， 超时时间， 超时后立即返回
+    """
     result = demo.delay()
-    return R.ok('OK', result)
+
+    data = {
+        'id': result.id,
+        'data': result.get(),
+    }
+
+    return R.ok('OK', data)
 
