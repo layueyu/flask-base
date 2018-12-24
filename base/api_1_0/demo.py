@@ -29,7 +29,7 @@ def task():
      - get 方法默认是阻塞的行为， 会等到有了执行结果子后才返回
      - get 方法也接受参数timeout， 超时时间， 超时后立即返回
     """
-    result = demo.delay()
+    result = demo2.delay()
 
     data = {
         'id': result.id,
@@ -37,4 +37,3 @@ def task():
     }
 
     return R.ok('OK', data)
-

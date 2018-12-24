@@ -10,10 +10,11 @@ SMS_CODE_REDIS_EXPIRES = 300
 # 发送短信验证码的间隔， 单位：秒
 SEND_SMS_CODE_INTERVAL = 60
 
-# 登陆错误尝试次数
+# 登陆错误尝试次数, 单位：次
 LOGIN_ERROR_MAX_TIMES = 5
 
 # 登陆错误限制时间， 单位：秒
-LOGIN_ERROR_FORBID_TIME = 600
+LOGIN_ERROR_FORBID_TIME = 10*60
 
-
+# token 过期时间, 单位：秒
+TOKEN_TIME_EXPIRES = 12*60*60

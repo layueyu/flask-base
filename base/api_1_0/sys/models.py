@@ -14,10 +14,13 @@ class User(BaseModel, db_.Model):
     __tablename__ = "sys_user"
 
     id = db_.Column(db_.Integer, primary_key=True)  # 用户编号
-    name = db_.Column(db_.String(32), unique=True, nullable=False)  # 用户昵称
+    user_name = db_.Column(db_.String(32), unique=True, nullable=False)  # 登录名
     password_hash = db_.Column(db_.String(256), nullable=False)  # 加密的密码
-    mobile = db_.Column(db_.String(11), unique=True, nullable=False)  # 手机号
+    name = db_.Column(db_.String(32))  # 用户姓名
+    mobile = db_.Column(db_.String(11))  # 手机号
     avatar_url = db_.Column(db_.String(256))  # 用户头像路径
+
+    token = db_.relationship("UserToken", backref="user")  # 用户token
 
     #  @property  将方法变为属性
     @property
@@ -46,3 +49,24 @@ class User(BaseModel, db_.Model):
         """
         return check_password_hash(self.password_hash, value)
 
+    def to_dict(self):
+        """转换 字典"""
+        return {
+            'id': self.id,
+            'user_name': self.user_name,
+            'name': self.name,
+            'mobile': self.mobile,
+            'avatar_url': self.avatar_url
+        }
+
+
+class UserToken(BaseModel, db_.Model):
+    """
+    用户 TOKEN 关联关系
+    """
+    __tablename__ = "sys_user_token"
+
+    id = db_.Column(db_.Integer, primary_key=True)  # 编号
+    user_id = db_.Column(db_.Integer, db_.ForeignKey('sys_user.id'))  # 用户编号
+    token = db_.Column(db_.String(300))  # token 值
+    expire_time = db_.Column(db_.DateTime)  # 过期时间

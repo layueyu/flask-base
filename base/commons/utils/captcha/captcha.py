@@ -19,7 +19,8 @@ class Bezier(object):
         self.tsequence = tuple([t / 20.0 for t in range(21)])
         self.beziers = {}
 
-    def pascal_row(self, n):
+    @staticmethod
+    def pascal_row(n):
         """ Returns n-th row of Pascal's triangle
         """
         result = [1]
@@ -70,6 +71,11 @@ class Captcha(object):
     def __init__(self):
         self._bezier = Bezier()
         self._dir = os.path.dirname(__file__)
+        self._text = None
+        self.fonts = None
+        self.width = None
+        self.height = None
+        self._color = None
         # self._captcha_path = os.path.join(self._dir, '..', 'static', 'captcha')
 
     def initialize(self, width=200, height=75, color=None, text=None, fonts=None):
@@ -79,9 +85,10 @@ class Captcha(object):
             [os.path.join(self._dir, 'fonts', font) for font in ['Arial.ttf', 'Georgia.ttf', 'actionj.ttf']]
         self.width = width
         self.height = height
-        self._color = color if color else self.__random_color(0, 200, random.randint(220, 255))
+        self._color = color if color else self.random_color(0, 200, random.randint(220, 255))
 
-    def __random_color(self, start, end, opacity=None):
+    @staticmethod
+    def random_color(start, end, opacity=None):
         red = random.randint(start, end)
         green = random.randint(start, end)
         blue = random.randint(start, end)
@@ -91,10 +98,11 @@ class Captcha(object):
 
     # draw image
     def __background(self, image):
-        Draw(image).rectangle([(0, 0), image.size], fill=self.__random_color(238, 255))
+        Draw(image).rectangle([(0, 0), image.size], fill=self.random_color(238, 255))
         return image
 
-    def __smooth(self, image):
+    @staticmethod
+    def smooth(image):
         return image.filter(ImageFilter.SMOOTH)
 
     def __curve(self, image, width=4, number=6, color=None):
@@ -155,7 +163,8 @@ class Captcha(object):
         return image
 
     # draw text
-    def warp(self, image, dx_factor=0.27, dy_factor=0.21):
+    @staticmethod
+    def warp(image, dx_factor=0.27, dy_factor=0.21):
         width, height = image.size
         dx = width * dx_factor
         dy = height * dy_factor
@@ -175,7 +184,8 @@ class Captcha(object):
              width2 + x2, height2 + y2,
              width2 - x2, -y1))
 
-    def offset(self, image, dx_factor=0.1, dy_factor=0.2):
+    @staticmethod
+    def offset(image, dx_factor=0.1, dy_factor=0.2):
         width, height = image.size
         dx = int(random.random() * width * dx_factor)
         dy = int(random.random() * height * dy_factor)
@@ -183,7 +193,8 @@ class Captcha(object):
         image2.paste(image, (dx, dy))
         return image2
 
-    def rotate(self, image, angle=25):
+    @staticmethod
+    def rotate(image, angle=25):
         return image.rotate(
             random.uniform(-angle, angle), Image.BILINEAR, expand=1)
 
@@ -204,7 +215,7 @@ class Captcha(object):
         image = self.__text(image, self.fonts, drawings=['warp', 'rotate', 'offset'])
         image = self.__curve(image)
         image = self.__noise(image)
-        image = self.__smooth(image)
+        image = self.smooth(image)
         name = "".join(random.sample(string.ascii_lowercase + string.ascii_uppercase + '3456789', 24))
         text = "".join(self._text)
         out = BytesIO()

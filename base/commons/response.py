@@ -74,24 +74,19 @@ class R(object):
         :param data: 数据
         :return:
         """
-        _result = {}
-
-        _result[ResultKey.CODE_KEY] = code
-        _result[ResultKey.MSG_KEY] = msg
+        _result = {
+            'code': code,
+            'msg': msg
+        }
         if data is None:
             _result[ResultKey.DATA_KEY] = data
 
         return jsonify(_result)
 
     @classmethod
-    def err(cls, code, msg=''):
+    def err(cls, code, msg):
         return cls.result_json(code=code, msg=msg, data=None)
 
     @classmethod
-    def ok(cls, msg=''):
-        return cls.result_json(code=RET.OK, msg=msg, data=None)
-
-    @classmethod
-    def ok(cls, msg, data):
+    def ok(cls, msg, data=None):
         return cls.result_json(code=RET.OK, msg=msg, data=data)
-

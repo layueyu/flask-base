@@ -35,7 +35,7 @@ def __create_app(setting_class):
     _app.config.from_object(setting_class)
 
     # 补充csrf防护
-    CSRFProtect(_app)
+    # CSRFProtect(_app)
 
     return _app
 

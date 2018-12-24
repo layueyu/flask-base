@@ -28,3 +28,7 @@ class RedisKeys:
         """发送 短信验证码 记录 KEY"""
         return 'send_sms_code_{}'.format(mobile)
 
+    @classmethod
+    def token_key(cls, user_id):
+        """token key"""
+        return 'user_token_{}'.format(user_id)

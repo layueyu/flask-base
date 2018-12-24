@@ -13,7 +13,7 @@ from base.commons.response import RET, R
 from base.commons.utils.captcha.captcha import Captcha
 
 
-@api.route('/image_codes/<uuid>', methods=['GET'])
+@api.route('/image_code/<uuid>', methods=['GET'])
 def get_image_code(uuid):
     """
     图片验证码
