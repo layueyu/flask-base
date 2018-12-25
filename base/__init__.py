@@ -35,7 +35,7 @@ def __create_app(setting_class):
     _app.config.from_object(setting_class)
 
     # 补充csrf防护
-    # CSRFProtect(_app)
+    CSRFProtect(_app)
 
     return _app
 
@@ -91,7 +91,10 @@ def __reg_blueprint(app):
     """
     # API 蓝图
     from base import api_1_0
-    app.register_blueprint(api_1_0.api, url_prefix='/api/v1.0')
+    app.register_blueprint(api_1_0.api)
+
+    from base.api_1_0 import static_view
+    app.register_blueprint(static_view.static_api)
 
 
 def __init_logging(setting_class):

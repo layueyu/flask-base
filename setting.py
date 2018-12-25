@@ -19,7 +19,7 @@ class Config(object):
     PERMANENT_SESSION_LIFETIME = 86400  # session 有效期，单位秒
 
     # logging
-    LOGGING_FILE = 'logs/logs'
+    LOGGING_FILE = 'logs/log'
     LOGGING_MAX_BYTES = 1024*1024*1024
     LOGGING_COUNT = 10
     LOGGING_FORMAT = '%(asctime)s === %(levelname)s === %(filename)s:%(lineno)d ===::: %(message)s'
@@ -31,8 +31,7 @@ class DevConfig(Config):
 
     # 数据库
     SQLALCHEMY_ECHO = True
-    SQLALCHEMY_DATABASE_URI = 'mysql://root:zero28!@127.0.0.1:3306/base'
-    # SQLALCHEMY_DATABASE_URI = 'mysql://root:123456@127.0.0.1:3306/base'
+    SQLALCHEMY_DATABASE_URI = 'mysql://root:123456@127.0.0.1:3306/base'
 
     # Redis
     REDIS_HOST = '127.0.0.1'
@@ -49,8 +48,7 @@ class DevConfig(Config):
 class ProConfig(Config):
     """运行环境配置"""
     # 数据库
-    SQLALCHEMY_DATABASE_URI = 'mysql://root:zero28!@127.0.0.1:3306/base'
-    # SQLALCHEMY_DATABASE_URI = 'mysql://root:123456@127.0.0.1:3306/base'
+    SQLALCHEMY_DATABASE_URI = 'mysql://root:123456@127.0.0.1:3306/base'
 
     # Redis
     REDIS_HOST = '127.0.0.1'

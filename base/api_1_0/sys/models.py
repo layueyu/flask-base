@@ -66,7 +66,6 @@ class UserToken(BaseModel, db_.Model):
     """
     __tablename__ = "sys_user_token"
 
-    id = db_.Column(db_.Integer, primary_key=True)  # 编号
-    user_id = db_.Column(db_.Integer, db_.ForeignKey('sys_user.id'))  # 用户编号
-    token = db_.Column(db_.String(300))  # token 值
-    expire_time = db_.Column(db_.DateTime)  # 过期时间
+    user_id = db_.Column(db_.Integer, db_.ForeignKey('sys_user.id'), primary_key=True)  # 用户编号
+    token = db_.Column(db_.String(300), nullable=False)  # token 值
+    expire_time = db_.Column(db_.DateTime, nullable=False)  # 过期时间

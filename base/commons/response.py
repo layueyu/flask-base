@@ -78,7 +78,7 @@ class R(object):
             'code': code,
             'msg': msg
         }
-        if data is None:
+        if data is not None:
             _result[ResultKey.DATA_KEY] = data
 
         return jsonify(_result)
